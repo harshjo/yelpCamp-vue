@@ -1,6 +1,6 @@
 <template>
   <div>
-    <myNavbar :isLoginPage="true"/>
+    <myNavbar :isLoginPage="true" />
     <div class="container">
       <b-card
         header="Login"
@@ -45,6 +45,8 @@
 <script>
 import myNavbar from "../components/my-navbar";
 import firebase from "firebase";
+import "firebase/firestore";
+
 export default {
   name: "Login",
   components: {
@@ -72,7 +74,7 @@ export default {
           alert(err);
         })
         .finally(() => {
-          this.disableSubmit = false
+          this.disableSubmit = false;
         });
     },
   },

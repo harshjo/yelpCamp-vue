@@ -7,14 +7,14 @@
           header="Welcome to YelpCamp!"
           lead="View campgrounds from all over the World!"
         >
-          <b-button variant="primary" href="#">Add new Campground</b-button>
+          <b-button variant="primary">Add new Campground</b-button>
         </b-jumbotron>
       </div>
 
       <b-row align-h="start" cols-lg="3" cols-md="2" no-gutters>
         <div v-for="campground in campgrounds" :key="campground.id">
           <b-col>
-            <myCard :campground="campground"/>
+            <myCard :campground="campground" />
           </b-col>
         </div>
       </b-row>
@@ -24,22 +24,35 @@
 
 
 <script>
-import myNavbar from "../components/my-navbar";
-import myCard from "../components/my-card";
+import myNavbar from "../../components/my-navbar";
+import myCard from "../../components/my-card";
 // import store from "../store";
 export default {
+  created() {
+    this.$db
+      .collection("campgrounds")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var temp_obj = doc.data();
+          temp_obj.id = doc.id;
+          this.campgrounds.push(temp_obj);
+        });
+        console.log(this.campgrounds);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
   data() {
-    return {};
+    return {
+      campgrounds: [],
+    };
   },
   components: {
     myNavbar,
-    myCard
+    myCard,
   },
-  computed: {
-    campgrounds() {
-      return this.$store.state.campgrounds;
-    }
-  }
 };
 </script>
 

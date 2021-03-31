@@ -12,7 +12,7 @@
       style="max-width: 21rem"
       class="mb-2 customs"
     >
-      <b-button href="#" variant="info">More Info...</b-button>
+      <b-button href="#" variant="info" :to="{name: 'ShowCampground', params: {id: campground.id}}">More Info...</b-button>
     </b-card>
   </div>
 </template>
