@@ -18,15 +18,22 @@
               <b-card-text>
                 {{ campground.description }}
               </b-card-text>
+              <b-card-text> Submitted by {USER} </b-card-text>
+              <b-button
+                :to="{ name: 'editCampground', params: { campground } }"
+                variant="warning"
+                class="mr-3"
+                >Edit</b-button
+              >
+              <b-button @click="deleteCampground" variant="danger"
+                >Delete</b-button
+              >
             </b-card>
           </div>
         </b-col>
         <b-col sm="1" lg="3">
           <div>
-            <b-card
-              no-body
-              style="max-width: 100%"
-            >
+            <b-card no-body style="max-width: 100%">
               <b-card-body>
                 <b-card-title>Address</b-card-title>
                 <b-card-text>
@@ -36,11 +43,14 @@
               </b-card-body>
 
               <b-list-group flush>
-                <b-list-group-item>Cost: $ {{ String(campground.price) }}/night</b-list-group-item>
+                <b-list-group-item
+                  >Cost: $
+                  {{ String(campground.price) }}/night</b-list-group-item
+                >
               </b-list-group>
 
               <b-card-body>
-                <a href="#" class="card-link">Go to all campgrounds</a>
+                <a to="/campgrounds" class="card-link">Go to all campgrounds</a>
               </b-card-body>
             </b-card>
           </div>
@@ -66,7 +76,7 @@ export default {
       .get()
       .then((snapshot) => {
         this.campground = snapshot.data();
-        console.log(this.campground)
+        console.log(this.campground);
       })
       .catch((err) => {
         console.log(err);
@@ -74,6 +84,21 @@ export default {
   },
   components: {
     myNavbar,
+  },
+  methods: {
+    deleteCampground() {
+      this.$db
+        .collection("campgrounds")
+        .doc(this.$route.params.id)
+        .delete()
+        .then(() => {
+          alert("Deleted Successfully");
+          this.$router.push('/campgrounds')
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>

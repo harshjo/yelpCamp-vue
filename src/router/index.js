@@ -19,9 +19,20 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Campgrounds/index.vue'),
   },
   {
+    path: '/campgrounds/new',
+    name: 'AddCampground',
+    component: () => import('../views/Campgrounds/new.vue')
+  },
+  {
     path: '/campgrounds/:id',
     name: 'ShowCampground',
     component: () => import('../views/Campgrounds/show.vue')
+  },
+  {
+    path: '/campgrounds/:id/edit',
+    name: 'editCampground',
+    component: () => import('../views/Campgrounds/edit.vue'),
+    props: true
   },
   {
     path: '/login',

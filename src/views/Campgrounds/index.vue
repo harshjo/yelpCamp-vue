@@ -7,7 +7,7 @@
           header="Welcome to YelpCamp!"
           lead="View campgrounds from all over the World!"
         >
-          <b-button variant="primary">Add new Campground</b-button>
+          <b-button variant="primary" :to="{name: 'AddCampground'}">Add new Campground</b-button>
         </b-jumbotron>
       </div>
 
