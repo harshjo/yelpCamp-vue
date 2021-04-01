@@ -17,7 +17,6 @@
             <div class="my-3">
               <p class="mb-0">Image</p>
               <b-form-input
-                class="my-3"
                 type="url"
                 placeholder="Image URL"
                 v-model="campground.image"
@@ -27,7 +26,6 @@
             <div class="my-3">
               <p class="mb-0">Cost</p>
               <b-form-input
-                class="my-3"
                 type="number"
                 placeholder="Campground cost per night"
                 v-model="campground.price"
@@ -37,7 +35,6 @@
             <div class="my-3">
               <p class="mb-0">Address</p>
               <b-form-textarea
-                class="my-3"
                 placeholder="Campground address"
                 v-model="campground.address"
                 required
@@ -46,7 +43,6 @@
             <div class="my-3">
               <p class="mb-0">Description</p>
               <b-form-textarea
-                class="my-3"
                 placeholder="Campground description"
                 v-model="campground.description"
                 required
