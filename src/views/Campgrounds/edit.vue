@@ -29,6 +29,7 @@
                 type="number"
                 placeholder="Campground cost per night"
                 v-model="campground.price"
+                step="any"
                 required
               ></b-form-input>
             </div>
@@ -75,6 +76,11 @@ export default {
     return {
       disableSubmit: false,
     };
+  },
+  created(){
+    if(typeof this.campground == "undefined"){
+      this.$router.push('/campgrounds')
+    }
   },
   methods: {
     onSubmit(event) {

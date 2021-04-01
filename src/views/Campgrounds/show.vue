@@ -1,7 +1,7 @@
 <template>
   <div>
     <myNavbar />
-    <b-container class="content">
+    <b-container class="content" v-if="fetched">
       <b-row cols-lg="2" cols-sm="1" cols-md="1">
         <b-col lg="9">
           <div>
@@ -67,6 +67,7 @@ export default {
   data() {
     return {
       campground: {},
+      fetched: false
     };
   },
   created() {
@@ -75,11 +76,19 @@ export default {
       .doc(this.$route.params.id)
       .get()
       .then((snapshot) => {
+        if(!snapshot.exists){
+          this.$router.push('/campgrounds')
+        }
+        this.fetched = true
         this.campground = snapshot.data();
         console.log(this.campground);
+        // if(typeof this.campground == undefined){
+        //   this.$router.push('/campgrounds')
+        // }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        // console.log(err);
+        this.$router.push('/campgrounds')
       });
   },
   components: {

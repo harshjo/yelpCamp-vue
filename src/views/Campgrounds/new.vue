@@ -29,6 +29,7 @@
                 type="number"
                 placeholder="Campground cost per night"
                 v-model="campground.price"
+                step="any"
                 required
               ></b-form-input>
             </div>
