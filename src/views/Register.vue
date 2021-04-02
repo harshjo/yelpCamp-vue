@@ -72,30 +72,40 @@ export default {
   },
   methods: {
     register(event) {
+      this.disableSubmit = true
       event.preventDefault();
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then((result) => {
-          result.user
-            .updateProfile({ displayName: this.user_name })
-            .then(() => {
-              let user = firebase.auth().currentUser;
-              // console.log(user)
-              this.$store.commit('SET_USER', user)
-              this.$store.commit('SET_USER_PRESENT')
-              // console.log(this.$store.state.user.displayName)
+        .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then(() => {
+          firebase
+            .auth()
+            .createUserWithEmailAndPassword(this.email, this.password)
+            .then((result) => {
+              result.user
+                .updateProfile({ displayName: this.user_name })
+                .then(() => {
+                  let user = firebase.auth().currentUser;
+                  // console.log(user)
+                  this.$store.commit("SET_USER", user);
+                  this.$store.commit("SET_USER_PRESENT");
+                  // console.log(this.$store.state.user.displayName)
+                })
+                .catch(() => {});
+              this.$store.commit("TOGGLE_LOGGED_IN");
+              this.$router.push("/campgrounds");
             })
-            .catch(() => {});
-          this.$store.commit("TOGGLE_LOGGED_IN");
-          this.$router.push("/campgrounds");
+            .catch((error) => {
+              alert(error);
+              console.log(error);
+            })
+            .finally(() => {
+              this.disableSubmit = false;
+            });
         })
         .catch((error) => {
-          alert(error);
-          console.log(error);
-        })
-        .finally(() => {
-          this.disableSubmit = false;
+          // Handle Errors here.
+          console.log(error)
         });
     },
   },

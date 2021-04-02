@@ -73,6 +73,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     console.log(to, from);
     var user = firebase.auth().currentUser;
+    // console.log(user)
     if (user) {
       next()
     } else {
