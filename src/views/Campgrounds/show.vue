@@ -22,7 +22,7 @@
                 Submitted by {{ campground.author_name }}
               </b-card-text>
               <b-button
-              v-if="
+                v-if="
                   this.$store.state.user_present &&
                   this.$store.state.user.uid == campground.author_id
                 "
@@ -36,10 +36,23 @@
                   this.$store.state.user_present &&
                   this.$store.state.user.uid == campground.author_id
                 "
-                @click="deleteCampground"
+                v-b-modal.modal-delete
                 variant="danger"
                 >Delete</b-button
               >
+              <b-modal
+                id="modal-delete"
+                centered
+                title="Confirm"
+                header-bg-variant="danger"
+                header-text-variant="light"
+                ok-variant="danger"
+                @ok='deleteCampground'
+              >
+                <p class="my-4">
+                  Are you sure you want to delete this campground?
+                </p>
+              </b-modal>
             </b-card>
           </div>
         </b-col>
@@ -61,7 +74,9 @@
               </b-list-group>
 
               <b-card-body>
-                <b-button to="/campgrounds" class="card-link">Back to all campgrounds</b-button>
+                <b-button to="/campgrounds" class="card-link"
+                  >Back to all campgrounds</b-button
+                >
               </b-card-body>
             </b-card>
           </div>
@@ -112,7 +127,7 @@ export default {
         .doc(this.$route.params.id)
         .delete()
         .then(() => {
-          alert("Deleted Successfully");
+          this.$store.commit('TOGGLE_CAMPGROUND_DELETED');
           this.$router.push("/campgrounds");
         })
         .catch((error) => {
