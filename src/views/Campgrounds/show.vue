@@ -43,7 +43,7 @@
             </b-card>
           </div>
         </b-col>
-        <b-col sm="1" lg="3">
+        <b-col sm="1" lg="3" class="mb-2">
           <div>
             <b-card no-body style="max-width: 100%">
               <b-card-body>
@@ -61,7 +61,7 @@
               </b-list-group>
 
               <b-card-body>
-                <a to="/campgrounds" class="card-link">Go to all campgrounds</a>
+                <b-button to="/campgrounds" class="card-link">Back to all campgrounds</b-button>
               </b-card-body>
             </b-card>
           </div>

@@ -30,8 +30,9 @@
 			v-if="this.$store.state.alert_logged_in"
       :show="3"
       class="my-alert-top"
+			fade
       dismissible
-      variant="warning"
+      variant="success"
       @dismissed="dismissed_logged_in"
     >
       <p>Logged In!</p>
@@ -40,6 +41,7 @@
 			v-if="this.$store.state.alert_logged_out"
       :show="3"
       class="my-alert-top"
+			fade
       dismissible
       variant="warning"
       @dismissed="dismissed_logged_out"
@@ -50,8 +52,9 @@
 			v-if="this.$store.state.alert_campground_added"
       :show="3"
       class="my-alert-top"
+			fade
       dismissible
-      variant="warning"
+      variant="success"
       @dismissed="dismissed_campground_added"
     >
       <p>Campground Added!</p>
@@ -60,8 +63,9 @@
 			v-if="this.$store.state.alert_campground_deleted"
       :show="3"
       class="my-alert-top"
+			fade
       dismissible
-      variant="warning"
+      variant="danger"
       @dismissed="dismissed_campground_deleted"
     >
       <p>Campground Deleted!</p>
@@ -70,6 +74,7 @@
 			v-if="this.$store.state.alert_campground_edited"
       :show="3"
       class="my-alert-top"
+			fade
       dismissible
       variant="warning"
       @dismissed="dismissed_campground_edited"
@@ -80,6 +85,7 @@
 			v-if="this.$store.state.alert_login_prompt"
       :show="3"
       class="my-alert-top"
+			fade
       dismissible
       variant="warning"
       @dismissed="dismissed_login_prompt"
@@ -138,5 +144,6 @@ export default {
 <style scoped>
 .my-alert-top {
   text-align: center;
+	height: 50px;
 }
 </style>
