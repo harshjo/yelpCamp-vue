@@ -18,14 +18,26 @@
               <b-card-text>
                 {{ campground.description }}
               </b-card-text>
-              <b-card-text> Submitted by {USER} </b-card-text>
+              <b-card-text>
+                Submitted by {{ campground.author_name }}
+              </b-card-text>
               <b-button
+              v-if="
+                  this.$store.state.user_present &&
+                  this.$store.state.user.uid == campground.author_id
+                "
                 :to="{ name: 'editCampground', params: { campground } }"
                 variant="warning"
                 class="mr-3"
                 >Edit</b-button
               >
-              <b-button @click="deleteCampground" variant="danger"
+              <b-button
+                v-if="
+                  this.$store.state.user_present &&
+                  this.$store.state.user.uid == campground.author_id
+                "
+                @click="deleteCampground"
+                variant="danger"
                 >Delete</b-button
               >
             </b-card>
@@ -37,8 +49,7 @@
               <b-card-body>
                 <b-card-title>Address</b-card-title>
                 <b-card-text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  {{ campground.address }}
                 </b-card-text>
               </b-card-body>
 
@@ -67,7 +78,7 @@ export default {
   data() {
     return {
       campground: {},
-      fetched: false
+      fetched: false,
     };
   },
   created() {
@@ -76,10 +87,10 @@ export default {
       .doc(this.$route.params.id)
       .get()
       .then((snapshot) => {
-        if(!snapshot.exists){
-          this.$router.push('/campgrounds')
+        if (!snapshot.exists) {
+          this.$router.push("/campgrounds");
         }
-        this.fetched = true
+        this.fetched = true;
         this.campground = snapshot.data();
         console.log(this.campground);
         // if(typeof this.campground == undefined){
@@ -88,7 +99,7 @@ export default {
       })
       .catch(() => {
         // console.log(err);
-        this.$router.push('/campgrounds')
+        this.$router.push("/campgrounds");
       });
   },
   components: {
@@ -102,7 +113,7 @@ export default {
         .delete()
         .then(() => {
           alert("Deleted Successfully");
-          this.$router.push('/campgrounds')
+          this.$router.push("/campgrounds");
         })
         .catch((error) => {
           console.log(error);
@@ -114,7 +125,7 @@ export default {
 
 <style scoped>
 .content {
-  margin-top: 90px;
+  margin-top: 30px;
 }
 .address-card {
   margin-bottom: 20px;

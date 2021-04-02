@@ -7,7 +7,9 @@
           header="Welcome to YelpCamp!"
           lead="View campgrounds from all over the World!"
         >
-          <b-button variant="primary" :to="{name: 'AddCampground'}">Add new Campground</b-button>
+          <b-button variant="primary" :to="{ name: 'AddCampground' }" @click="isLogged"
+            >Add new Campground</b-button
+          >
         </b-jumbotron>
       </div>
 
@@ -53,13 +55,20 @@ export default {
     myNavbar,
     myCard,
   },
+  methods: {
+    isLogged(){
+      if(!this.$store.state.user_present){
+        this.$store.commit('TOGGLE_LOGIN_PROMPT')
+      }
+    }
+  }
 };
 </script>
 
 
 <style scoped>
 #main-content {
-  margin-top: 90px;
+  margin-top: 25px;
 }
 .custom-card {
   margin-bottom: 30px !important;

@@ -66,9 +66,9 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then((userCredential) => {
-          alert("Successfully logged in!");
           this.$store.commit("SET_USER", userCredential.user);
           this.$store.commit("SET_USER_PRESENT");
+          this.$store.commit("TOGGLE_LOGGED_IN");
           this.$router.push("/campgrounds");
         })
         .catch((err) => {

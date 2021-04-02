@@ -81,30 +81,13 @@ export default {
             .updateProfile({ displayName: this.user_name })
             .then(() => {
               let user = firebase.auth().currentUser;
-              console.log(user)
+              // console.log(user)
               this.$store.commit('SET_USER', user)
-              this.store.commit('SET_USER_PRESENT')
-              console.log(this.$store.state.user.displayName)
+              this.$store.commit('SET_USER_PRESENT')
+              // console.log(this.$store.state.user.displayName)
             })
             .catch(() => {});
-          // Signed in
-          // var user = firebase.auth().currentUser;
-          // user
-          //   .updateProfile({
-          //     displayName: this.user_name,
-          //   })
-          //   .then(function () {
-          //     console.log("in updateProfile");
-          //     var user = firebase.auth().currentUser;
-          //     console.log(user)
-          //     this.$store.commit("SET_USER", user);
-          //     console.log("User Regestered!", this.$store.user);
-          //     this.$router.push("/campgrounds");
-          //   })
-          //   .catch(function (error) {
-          //     console.log(error);
-          //   });
-          alert("Signed In!");
+          this.$store.commit("TOGGLE_LOGGED_IN");
           this.$router.push("/campgrounds");
         })
         .catch((error) => {

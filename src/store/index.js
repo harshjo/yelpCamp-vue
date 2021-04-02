@@ -6,7 +6,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		user: {},
-		user_present: false
+            user_present: false,
+            alert_logged_in: false,
+            alert_logged_out: false,
+            alert_campground_added: false,
+            alert_campground_deleted: false,
+            alert_campground_edited: false,
+            alert_login_prompt: false,
 	},
 	mutations: {
 		SET_USER(state, user) {
@@ -14,7 +20,25 @@ export default new Vuex.Store({
 		},
 		SET_USER_PRESENT(state){
 			state.user_present = !state.user_present
-		}
+            },
+            TOGGLE_LOGGED_IN(state){
+                  state.alert_logged_in = !state.alert_logged_in
+            },
+            TOGGLE_LOGGED_OUT(state){
+                  state.alert_logged_out = !state.alert_logged_out
+            },
+            TOGGLE_CAMPGROUND_ADDED(state){
+                  state.alert_campground_added = !state.alert_campground_added
+            },
+            TOGGLE_CAMPGROUND_DELETED(state){
+                  state.alert_campground_deleted = !state.alert_campground_deleted
+            },
+            TOGGLE_CAMPGROUND_EDITED(state){
+                  state.alert_campground_edited = !state.alert_campground_edited
+            },
+            TOGGLE_LOGIN_PROMPT(state){
+                  state.alert_login_prompt = !state.alert_login_prompt
+            }
 	},
 	actions: {
 	},

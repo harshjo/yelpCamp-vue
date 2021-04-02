@@ -91,7 +91,7 @@ export default {
         .doc(this.$route.params.id)
         .update(this.campground)
         .then(() => {
-          alert("Updated Successfully");
+          this.$store.commit('TOGGLE_CAMPGROUND_EDITED');
           this.$router.push(`/campgrounds/${this.$route.params.id}`)
         })
         .catch((error) => {

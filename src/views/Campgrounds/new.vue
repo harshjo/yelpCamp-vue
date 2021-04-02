@@ -65,9 +65,19 @@
 
 <script>
 import myNavbar from "../../components/my-navbar";
+import firebase from "firebase";
 export default {
   components: {
     myNavbar,
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log(to, from);
+    var user = firebase.auth().currentUser;
+    if (user) {
+      next()
+    } else {
+      next('/login')
+    }
   },
   data() {
     return {
@@ -77,8 +87,8 @@ export default {
         price: null,
         address: "",
         description: "",
-        author_id: "",
-        author_name: ""
+        author_id: this.$store.state.user.uid,
+        author_name: this.$store.state.user.displayName,
       },
       disableSubmit: false,
     };
@@ -87,12 +97,12 @@ export default {
     onSubmit(event) {
       event.preventDefault();
       this.disableSubmit = true;
-      console.log("IN here");
+      // console.log("IN here", this.$store.state.user.uid, this.$store.state.user.displayName);
       this.$db
         .collection("campgrounds")
         .add(this.campground)
-        .then((docRef) => {
-          alert(`Campground added Successfully, id = ${docRef}`);
+        .then(() => {
+          this.$store.commit('TOGGLE_CAMPGROUND_ADDED')
           this.$router.push("/campgrounds");
         })
         .catch((error) => {
@@ -109,7 +119,7 @@ export default {
 
 <style scoped>
 .content {
-  margin-top: 90px;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 #heading {
