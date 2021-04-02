@@ -45,7 +45,6 @@
 <script>
 import myNavbar from "../components/my-navbar";
 import firebase from "firebase";
-import "firebase/firestore";
 
 export default {
   name: "Login",
@@ -66,8 +65,10 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(() => {
+        .then((userCredential) => {
           alert("Successfully logged in!");
+          this.$store.commit("SET_USER", userCredential.user);
+          this.$store.commit("SET_USER_PRESENT");
           this.$router.push("/campgrounds");
         })
         .catch((err) => {

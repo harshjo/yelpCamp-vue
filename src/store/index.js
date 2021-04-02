@@ -1,41 +1,26 @@
-// import db from '../firebase/firebaseInit'
-// import Vue from 'vue'
-// import Vuex from 'vuex'
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-// Vue.use(Vuex)
+Vue.use(Vuex)
 
-// export default new Vuex.Store({
-//   state: {
-//     campgrounds: [],
-//     user: {},
-
-//   },
-//   mutations: {
-//     SET_CAMPGROUNDS(state, campgrounds) {
-//       state.campgrounds = campgrounds
-//     }
-//   },
-//   actions: {
-//     getCampgrounds({ commit }) {
-//       var campgrounds = []
-//       db.collection("campgrounds").get()
-//         .then((querySnapshot) => {
-//           querySnapshot.forEach(doc => {
-//             var temp_obj = doc.data()
-//             temp_obj.id = doc.id
-//             campgrounds.push(temp_obj)
-//           })
-//           console.log(campgrounds)
-//           commit('SET_CAMPGROUNDS', campgrounds)
-//         })
-//         .catch((error) =>{
-//           console.log(error)
-//         })
-//     }
-//   },
-//   modules: {
-//   }
-// })
+export default new Vuex.Store({
+	state: {
+		user: {},
+		user_present: false
+	},
+	mutations: {
+		SET_USER(state, user) {
+			state.user = user
+		},
+		SET_USER_PRESENT(state){
+			state.user_present = !state.user_present
+		}
+	},
+	actions: {
+	},
+	modules: {
+	}
+})
 
 // {
       //   id: "cmp1",

@@ -16,37 +16,37 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Campgrounds/index.vue'),
+    component: () => import(/* webpackChunkName: "index" */ '../views/Campgrounds/index.vue'),
   },
   {
     path: '/campgrounds/new',
     name: 'AddCampground',
-    component: () => import('../views/Campgrounds/new.vue')
+    component: () => import(/* webpackChunkName: "new" */ '../views/Campgrounds/new.vue')
   },
   {
     path: '/campgrounds/:id',
     name: 'ShowCampground',
-    component: () => import('../views/Campgrounds/show.vue')
+    component: () => import(/* webpackChunkName: "show" */ '../views/Campgrounds/show.vue')
   },
   {
     path: '/campgrounds/:id/edit',
     name: 'editCampground',
-    component: () => import('../views/Campgrounds/edit.vue'),
+    component: () => import(/* webpackChunkName: "edit" */ '../views/Campgrounds/edit.vue'),
     props: true
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/Login.vue')
+    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
   },
   {
     path: '/register',
     name: 'Register',
-    component: () => import('../views/Register.vue')
+    component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue')
   },
   {
     path: '*',
-    component: () => import('../views/FourOFour.vue')
+    component: () => import(/* webpackChunkName: "catch" */ '../views/FourOFour.vue')
   }
 ]
 

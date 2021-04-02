@@ -1,6 +1,6 @@
 <template>
   <div>
-    <myNavbar :isRegisterPage="true"/>
+    <myNavbar :isRegisterPage="true" />
     <div class="container">
       <b-card
         header="Register"
@@ -43,7 +43,9 @@
                 Looks Good.
               </b-form-valid-feedback>
             </b-form-group>
-            <b-button type="submit" variant="primary" :disabled="disableSubmit">Submit</b-button>
+            <b-button type="submit" variant="primary" :disabled="disableSubmit"
+              >Submit</b-button
+            >
             <b-button type="reset" variant="danger" id="resetBtn"
               >Reset</b-button
             >
@@ -65,7 +67,7 @@ export default {
       user_name: "",
       email: "",
       password: "",
-      disableSubmit: false
+      disableSubmit: false,
     };
   },
   methods: {
@@ -74,31 +76,44 @@ export default {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then(() => {
+        .then((result) => {
+          result.user
+            .updateProfile({ displayName: this.user_name })
+            .then(() => {
+              let user = firebase.auth().currentUser;
+              console.log(user)
+              this.$store.commit('SET_USER', user)
+              this.store.commit('SET_USER_PRESENT')
+              console.log(this.$store.state.user.displayName)
+            })
+            .catch(() => {});
           // Signed in
-          var user = firebase.auth().currentUser;
-          user
-            .updateProfile({
-              displayName: this.user_name,
-            })
-            .then(function () {
-              console.log("User Regestered!");
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          this.disableSubmit = false;
-          this.$router.push("/campgrounds");
+          // var user = firebase.auth().currentUser;
+          // user
+          //   .updateProfile({
+          //     displayName: this.user_name,
+          //   })
+          //   .then(function () {
+          //     console.log("in updateProfile");
+          //     var user = firebase.auth().currentUser;
+          //     console.log(user)
+          //     this.$store.commit("SET_USER", user);
+          //     console.log("User Regestered!", this.$store.user);
+          //     this.$router.push("/campgrounds");
+          //   })
+          //   .catch(function (error) {
+          //     console.log(error);
+          //   });
           alert("Signed In!");
+          this.$router.push("/campgrounds");
         })
         .catch((error) => {
           alert(error);
           console.log(error);
+        })
+        .finally(() => {
+          this.disableSubmit = false;
         });
-      this.user_name = "";
-      this.email = "";
-      this.password = "";
-      this.disableSubmit = true;
     },
   },
   computed: {

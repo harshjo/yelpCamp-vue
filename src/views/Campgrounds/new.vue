@@ -77,6 +77,8 @@ export default {
         price: null,
         address: "",
         description: "",
+        author_id: "",
+        author_name: ""
       },
       disableSubmit: false,
     };
