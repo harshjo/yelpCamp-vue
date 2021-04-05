@@ -82,6 +82,8 @@
           </div>
         </b-col>
       </b-row>
+
+      <!-- Comments Section -->
     </b-container>
   </div>
 </template>
