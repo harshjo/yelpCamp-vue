@@ -12,6 +12,9 @@ export default new Vuex.Store({
             alert_campground_added: false,
             alert_campground_deleted: false,
             alert_campground_edited: false,
+            alert_comment_added: false,
+            alert_comment_deleted: false,
+            alert_comment_edited: false,
             alert_login_prompt: false,
 	},
 	mutations: {
@@ -35,6 +38,15 @@ export default new Vuex.Store({
             },
             TOGGLE_CAMPGROUND_EDITED(state){
                   state.alert_campground_edited = !state.alert_campground_edited
+            },
+            TOGGLE_COMMENT_ADDED(state){
+                  state.alert_comment_added = !state.alert_comment_added
+            },
+            TOGGLE_COMMENT_EDITED(state){
+                  state.alert_comment_edited = !state.alert_comment_edited
+            },
+            TOGGLE_COMMENT_DELETED(state){
+                  state.alert_comment_deleted = !state.alert_comment_deleted
             },
             TOGGLE_LOGIN_PROMPT(state){
                   state.alert_login_prompt = !state.alert_login_prompt

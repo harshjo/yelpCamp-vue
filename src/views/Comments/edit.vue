@@ -56,7 +56,7 @@ export default {
         .doc(this.comment.comment_id)
         .update({ data: this.comment.data })
         .then(() => {
-          this.$store.commit("TOGGLE_CAMPGROUND_EDITED");
+          this.$store.commit("TOGGLE_COMMENT_EDITED");
           this.$router.push(`/campgrounds/${this.$route.params.id}`);
         })
         .catch((error) => {

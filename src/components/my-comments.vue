@@ -90,14 +90,13 @@ export default {
       }
     },
     deleteComment(comment_id) {
-      alert(comment_id)
       this.$db
         .collection("comments")
         .doc(comment_id)
         .delete()
         .then(() => {
           this.$emit('commentDeleted')
-          this.$store.commit("TOGGLE_CAMPGROUND_DELETED");
+          this.$store.commit("TOGGLE_COMMENT_DELETED");
           this.$router.push(`/campgrounds/${this.$route.params.id}`).catch(()=>{});
         })
         .catch((error) => {

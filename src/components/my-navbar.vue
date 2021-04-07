@@ -81,6 +81,39 @@
     >
       <p>Campground Edited!</p>
     </b-alert>
+    <b-alert
+			v-if="this.$store.state.alert_comment_added"
+      :show="3"
+      class="my-alert-top"
+			fade
+      dismissible
+      variant="success"
+      @dismissed="dismissed_comment_added"
+    >
+      <p>Comment Added!</p>
+    </b-alert>
+		<b-alert
+			v-if="this.$store.state.alert_comment_deleted"
+      :show="3"
+      class="my-alert-top"
+			fade
+      dismissible
+      variant="danger"
+      @dismissed="dismissed_comment_deleted"
+    >
+      <p>Comment Deleted!</p>
+    </b-alert>
+		<b-alert
+			v-if="this.$store.state.alert_comment_edited"
+      :show="3"
+      class="my-alert-top"
+			fade
+      dismissible
+      variant="warning"
+      @dismissed="dismissed_comment_edited"
+    >
+      <p>Comment Edited!</p>
+    </b-alert>
 		<b-alert
 			v-if="this.$store.state.alert_login_prompt"
       :show="3"
@@ -132,6 +165,15 @@ export default {
 		},
 		dismissed_campground_edited() {
 			this.$store.commit('TOGGLE_CAMPGROUND_EDITED')
+    },
+    dismissed_comment_added() {
+			this.$store.commit('TOGGLE_COMMENT_ADDED')
+		},
+		dismissed_comment_deleted() {
+			this.$store.commit('TOGGLE_COMMENT_DELETED')
+		},
+		dismissed_comment_edited() {
+			this.$store.commit('TOGGLE_COMMENT_EDITED')
 		},
 		dismissed_login_prompt() {
 			this.$store.commit('TOGGLE_LOGIN_PROMPT')

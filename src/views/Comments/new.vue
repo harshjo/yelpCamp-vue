@@ -64,10 +64,10 @@ export default {
         .collection("comments")
         .add(this.comment)
         .then((docRef) => {
-          alert("comment added");
           docRef.update({
               comment_id: docRef.id
           })
+          this.$store.commit('TOGGLE_COMMENT_ADDED')
           this.$router.push(`/campgrounds/${this.$route.params.id}`)
         })
         .catch((error) => {
