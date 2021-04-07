@@ -35,6 +35,17 @@ const routes = [
     props: true
   },
   {
+    path: '/campgrounds/:id/comment/new',
+    name: 'newComment',
+    component: () => import(/* webpackChunkName: "newComment" */ '../views/Comments/new.vue')
+  },
+  {
+    path: '/campgrounds/:id/comment/edit',
+    name: 'editComment',
+    component: () => import(/* webpackChunkName: "editComment" */ '../views/Comments/edit.vue'),
+    props: true
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')

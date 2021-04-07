@@ -47,7 +47,7 @@
                 header-bg-variant="danger"
                 header-text-variant="light"
                 ok-variant="danger"
-                @ok='deleteCampground'
+                @ok="deleteCampground"
               >
                 <p class="my-4">
                   Are you sure you want to delete this campground?
@@ -84,6 +84,7 @@
       </b-row>
 
       <!-- Comments Section -->
+      <myComments/>
     </b-container>
   </div>
 </template>
@@ -91,11 +92,19 @@
 
 <script>
 import myNavbar from "../../components/my-navbar";
+import myComments from "../../components/my-comments";
 export default {
   data() {
     return {
       campground: {},
       fetched: false,
+      comment_details: {
+        campground_id: "",
+        author_id: "",
+        comment: "",
+        author_name: "",
+      },
+      comments: [],
     };
   },
   created() {
@@ -109,18 +118,19 @@ export default {
         }
         this.fetched = true;
         this.campground = snapshot.data();
-        console.log(this.campground);
+        // console.log(this.campground);
         // if(typeof this.campground == undefined){
         //   this.$router.push('/campgrounds')
         // }
       })
-      .catch(() => {
-        // console.log(err);
+      .catch((err) => {
+        console.log(err);
         this.$router.push("/campgrounds");
       });
   },
   components: {
     myNavbar,
+    myComments,
   },
   methods: {
     deleteCampground() {
@@ -129,12 +139,37 @@ export default {
         .doc(this.$route.params.id)
         .delete()
         .then(() => {
-          this.$store.commit('TOGGLE_CAMPGROUND_DELETED');
+          this.$store.commit("TOGGLE_CAMPGROUND_DELETED");
           this.$router.push("/campgrounds");
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    addComment() {
+      this.comment_details.author_id = this.$store.state.user.uid;
+      this.comment_details.author_name = this.$store.state.user.displayName;
+      this.comment_details.campground_id = this.$route.params.id;
+      this.$db
+        .collection("comments")
+        .add(this.comment_details)
+        .then(() => {
+          console.log("Comment added?");
+          this.$router.push({
+            name: "ShowCampground",
+            params: { id: this.$route.params.id },
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+  computed: {
+    placeholder() {
+      if (this.$store.state.user_present) {
+        return "Enter your comment";
+      } else return "Login to comment";
     },
   },
 };

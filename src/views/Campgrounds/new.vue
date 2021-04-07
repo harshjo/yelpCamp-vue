@@ -90,12 +90,6 @@ export default {
         description: "",
         author_id: this.$store.state.user.uid,
         author_name: this.$store.state.user.displayName,
-        comments: [{
-          author_id: '',
-          author_name: '',
-          comment: '',
-          timestamp: '',
-        }]
       },
       disableSubmit: false,
     };
