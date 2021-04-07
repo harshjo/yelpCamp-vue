@@ -84,7 +84,7 @@
       </b-row>
 
       <!-- Comments Section -->
-      <myComments/>
+      <myComments :key="reRender" @commentDeleted="reRender++"/>
     </b-container>
   </div>
 </template>
@@ -96,6 +96,7 @@ import myComments from "../../components/my-comments";
 export default {
   data() {
     return {
+      reRender: 0,
       campground: {},
       fetched: false,
       comment_details: {
@@ -144,24 +145,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-        });
-    },
-    addComment() {
-      this.comment_details.author_id = this.$store.state.user.uid;
-      this.comment_details.author_name = this.$store.state.user.displayName;
-      this.comment_details.campground_id = this.$route.params.id;
-      this.$db
-        .collection("comments")
-        .add(this.comment_details)
-        .then(() => {
-          console.log("Comment added?");
-          this.$router.push({
-            name: "ShowCampground",
-            params: { id: this.$route.params.id },
-          });
-        })
-        .catch((err) => {
-          console.log(err);
         });
     },
   },

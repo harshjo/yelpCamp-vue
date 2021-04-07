@@ -88,7 +88,4 @@ export default {
   margin-top: 80px;
   margin-bottom: 20px;
 }
-#heading {
-  text-align: center;
-}
 </style>
