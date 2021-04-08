@@ -61,27 +61,18 @@
 export default {
   name: "myComments",
   data() {
-    return {
-      comments: [],
-    };
+    return {};
+  },
+  computed: {
+    comments() {
+      return this.$store.state.comments;
+    },
   },
   created() {
     // console.log(this.campground_id, '   ', this.$route.params.id)
-    this.$db
-      .collection("comments")
-      .get()
-      .then((querySnapshot) => {
-        console.log("In here");
-        querySnapshot.forEach((doc) => {
-          if (doc.data().campground_id == this.$route.params.id) {
-            console.log("IN here");
-            this.comments.push(doc.data());
-          }
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.$store.dispatch("get_comments", {
+      current_campground_id: this.$route.params.id,
+    });
   },
   methods: {
     isLogged() {
@@ -90,18 +81,12 @@ export default {
       }
     },
     deleteComment(comment_id) {
-      this.$db
-        .collection("comments")
-        .doc(comment_id)
-        .delete()
-        .then(() => {
-          this.$emit('commentDeleted')
-          this.$store.commit("TOGGLE_COMMENT_DELETED");
-          this.$router.push(`/campgrounds/${this.$route.params.id}`).catch(()=>{});
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.$emit("commentDeleted");
+      this.$store.dispatch("delete_comment", {
+        comment_id: comment_id,
+        campground_id: this.$route.params.id,
+        router: this.$router
+      });
     },
   },
 };

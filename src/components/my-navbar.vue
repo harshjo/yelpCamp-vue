@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="dark" :sticky=true>
+    <b-navbar toggleable="lg" type="dark" variant="dark" :sticky="true">
       <b-navbar-brand to="/campgrounds">YelpCamp</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -27,54 +27,54 @@
       </b-collapse>
     </b-navbar>
     <b-alert
-			v-if="this.$store.state.alert_logged_in"
+      v-if="this.$store.state.alert_logged_in"
       :show="3"
       class="my-alert-top"
-			fade
+      fade
       dismissible
       variant="success"
       @dismissed="dismissed_logged_in"
     >
       <p>Logged In!</p>
     </b-alert>
-		<b-alert
-			v-if="this.$store.state.alert_logged_out"
+    <b-alert
+      v-if="this.$store.state.alert_logged_out"
       :show="3"
       class="my-alert-top"
-			fade
+      fade
       dismissible
       variant="warning"
       @dismissed="dismissed_logged_out"
     >
       <p>Logged Out!</p>
     </b-alert>
-		<b-alert
-			v-if="this.$store.state.alert_campground_added"
+    <b-alert
+      v-if="this.$store.state.alert_campground_added"
       :show="3"
       class="my-alert-top"
-			fade
+      fade
       dismissible
       variant="success"
       @dismissed="dismissed_campground_added"
     >
       <p>Campground Added!</p>
     </b-alert>
-		<b-alert
-			v-if="this.$store.state.alert_campground_deleted"
+    <b-alert
+      v-if="this.$store.state.alert_campground_deleted"
       :show="3"
       class="my-alert-top"
-			fade
+      fade
       dismissible
       variant="danger"
       @dismissed="dismissed_campground_deleted"
     >
       <p>Campground Deleted!</p>
     </b-alert>
-		<b-alert
-			v-if="this.$store.state.alert_campground_edited"
+    <b-alert
+      v-if="this.$store.state.alert_campground_edited"
       :show="3"
       class="my-alert-top"
-			fade
+      fade
       dismissible
       variant="warning"
       @dismissed="dismissed_campground_edited"
@@ -82,43 +82,43 @@
       <p>Campground Edited!</p>
     </b-alert>
     <b-alert
-			v-if="this.$store.state.alert_comment_added"
+      v-if="this.$store.state.alert_comment_added"
       :show="3"
       class="my-alert-top"
-			fade
+      fade
       dismissible
       variant="success"
       @dismissed="dismissed_comment_added"
     >
       <p>Comment Added!</p>
     </b-alert>
-		<b-alert
-			v-if="this.$store.state.alert_comment_deleted"
+    <b-alert
+      v-if="this.$store.state.alert_comment_deleted"
       :show="3"
       class="my-alert-top"
-			fade
+      fade
       dismissible
       variant="danger"
       @dismissed="dismissed_comment_deleted"
     >
       <p>Comment Deleted!</p>
     </b-alert>
-		<b-alert
-			v-if="this.$store.state.alert_comment_edited"
+    <b-alert
+      v-if="this.$store.state.alert_comment_edited"
       :show="3"
       class="my-alert-top"
-			fade
+      fade
       dismissible
       variant="warning"
       @dismissed="dismissed_comment_edited"
     >
       <p>Comment Edited!</p>
     </b-alert>
-		<b-alert
-			v-if="this.$store.state.alert_login_prompt"
+    <b-alert
+      v-if="this.$store.state.alert_login_prompt"
       :show="3"
       class="my-alert-top"
-			fade
+      fade
       dismissible
       variant="warning"
       @dismissed="dismissed_login_prompt"
@@ -129,7 +129,6 @@
 </template>
 
 <script>
-import firebase from "firebase";
 export default {
   name: "myNavbar",
   props: {
@@ -138,46 +137,35 @@ export default {
   },
   methods: {
     logOut() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$store.commit("SET_USER", {});
-					this.$store.commit("SET_USER_PRESENT");
-					this.$store.commit("TOGGLE_LOGGED_OUT");
-          this.$router.push("/campgrounds");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-		},
-		dismissed_logged_in() {
-			this.$store.commit('TOGGLE_LOGGED_IN')
-		},
-		dismissed_logged_out() {
-			this.$store.commit('TOGGLE_LOGGED_OUT')
-		},
-		dismissed_campground_added() {
-			this.$store.commit('TOGGLE_CAMPGROUND_ADDED')
-		},
-		dismissed_campground_deleted() {
-			this.$store.commit('TOGGLE_CAMPGROUND_DELETED')
-		},
-		dismissed_campground_edited() {
-			this.$store.commit('TOGGLE_CAMPGROUND_EDITED')
+      this.$store.dispatch("logout_user", { router: this.$router });
+    },
+    dismissed_logged_in() {
+      this.$store.commit("TOGGLE_LOGGED_IN");
+    },
+    dismissed_logged_out() {
+      this.$store.commit("TOGGLE_LOGGED_OUT");
+    },
+    dismissed_campground_added() {
+      this.$store.commit("TOGGLE_CAMPGROUND_ADDED");
+    },
+    dismissed_campground_deleted() {
+      this.$store.commit("TOGGLE_CAMPGROUND_DELETED");
+    },
+    dismissed_campground_edited() {
+      this.$store.commit("TOGGLE_CAMPGROUND_EDITED");
     },
     dismissed_comment_added() {
-			this.$store.commit('TOGGLE_COMMENT_ADDED')
-		},
-		dismissed_comment_deleted() {
-			this.$store.commit('TOGGLE_COMMENT_DELETED')
-		},
-		dismissed_comment_edited() {
-			this.$store.commit('TOGGLE_COMMENT_EDITED')
-		},
-		dismissed_login_prompt() {
-			this.$store.commit('TOGGLE_LOGIN_PROMPT')
-		}
+      this.$store.commit("TOGGLE_COMMENT_ADDED");
+    },
+    dismissed_comment_deleted() {
+      this.$store.commit("TOGGLE_COMMENT_DELETED");
+    },
+    dismissed_comment_edited() {
+      this.$store.commit("TOGGLE_COMMENT_EDITED");
+    },
+    dismissed_login_prompt() {
+      this.$store.commit("TOGGLE_LOGIN_PROMPT");
+    },
   },
 };
 </script>
@@ -186,6 +174,6 @@ export default {
 <style scoped>
 .my-alert-top {
   text-align: center;
-	height: 50px;
+  height: 50px;
 }
 </style>

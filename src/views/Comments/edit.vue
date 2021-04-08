@@ -3,7 +3,7 @@
     <myNavbar />
     <div class="content">
       <b-container>
-        <b-card header="Add new Comment" style="max-width: 100%">
+        <b-card header="Edit Comment" style="max-width: 100%">
           <b-form @submit="onSubmit">
             <div class="my-3">
               <p class="mb-0">Comment</p>
@@ -51,17 +51,12 @@ export default {
     onSubmit(event) {
       event.preventDefault();
       this.disableSubmit = true;
-      this.$db
-        .collection("comments")
-        .doc(this.comment.comment_id)
-        .update({ data: this.comment.data })
-        .then(() => {
-          this.$store.commit("TOGGLE_COMMENT_EDITED");
-          this.$router.push(`/campgrounds/${this.$route.params.id}`);
-        })
-        .catch((error) => {
-          alert("Something went wrong!");
-          console.log(error);
+      this.$store
+        .dispatch("edit_comment", {
+          comment_id: this.comment.comment_id,
+          data: this.comment.data,
+          campground_id: this.$route.params.id,
+          router: this.$router
         })
         .finally(() => {
           this.disableSubmit = false;

@@ -58,7 +58,6 @@
 
 
 <script>
-import firebase from "firebase";
 import myNavbar from "../components/my-navbar";
 export default {
   name: "Register",
@@ -72,40 +71,17 @@ export default {
   },
   methods: {
     register(event) {
-      this.disableSubmit = true
+      this.disableSubmit = true;
       event.preventDefault();
-      firebase
-        .auth()
-        .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then(() => {
-          firebase
-            .auth()
-            .createUserWithEmailAndPassword(this.email, this.password)
-            .then((result) => {
-              result.user
-                .updateProfile({ displayName: this.user_name })
-                .then(() => {
-                  let user = firebase.auth().currentUser;
-                  // console.log(user)
-                  this.$store.commit("SET_USER", user);
-                  this.$store.commit("SET_USER_PRESENT");
-                  // console.log(this.$store.state.user.displayName)
-                })
-                .catch(() => {});
-              this.$store.commit("TOGGLE_LOGGED_IN");
-              this.$router.push("/campgrounds");
-            })
-            .catch((error) => {
-              alert(error);
-              console.log(error);
-            })
-            .finally(() => {
-              this.disableSubmit = false;
-            });
+      this.$store
+        .dispatch("register_user", {
+          email: this.email,
+          password: this.password,
+          user_name: this.user_name,
+          router: this.$router
         })
-        .catch((error) => {
-          // Handle Errors here.
-          console.log(error)
+        .finally(() => {
+          this.disableSubmit = false;
         });
     },
   },

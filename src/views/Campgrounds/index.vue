@@ -7,7 +7,10 @@
           header="Welcome to YelpCamp!"
           lead="View campgrounds from all over the World!"
         >
-          <b-button variant="primary" :to="{ name: 'AddCampground' }" @click="isLogged"
+          <b-button
+            variant="primary"
+            :to="{ name: 'AddCampground' }"
+            @click="isLogged"
             >Add new Campground</b-button
           >
         </b-jumbotron>
@@ -31,25 +34,16 @@ import myCard from "../../components/my-card";
 // import store from "../store";
 export default {
   created() {
-    this.$db
-      .collection("campgrounds")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          var temp_obj = doc.data();
-          temp_obj.id = doc.id;
-          this.campgrounds.push(temp_obj);
-        });
-        console.log(this.campgrounds);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log(this)
+    this.$store.dispatch('get_all_campgrounds')
+    console.log(this.h)
   },
   data() {
     return {
-      campgrounds: [],
     };
+  },
+  computed: {
+    campgrounds() {return this.$store.state.campgrounds}
   },
   components: {
     myNavbar,

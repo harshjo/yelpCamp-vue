@@ -75,9 +75,9 @@ export default {
     var user = firebase.auth().currentUser;
     // console.log(user)
     if (user) {
-      next()
+      next();
     } else {
-      next('/login')
+      next("/login");
     }
   },
   data() {
@@ -99,20 +99,10 @@ export default {
       event.preventDefault();
       this.disableSubmit = true;
       // console.log("IN here", this.$store.state.user.uid, this.$store.state.user.displayName);
-      this.$db
-        .collection("campgrounds")
-        .add(this.campground)
-        .then(() => {
-          this.$store.commit('TOGGLE_CAMPGROUND_ADDED')
-          this.$router.push("/campgrounds");
-        })
-        .catch((error) => {
-          alert("Error");
-          console.log(error);
-        })
-        .finally(() => {
-          this.disableSubmit = false;
-        });
+      this.$store.dispatch("add_new_campground", {
+        campground: this.campground,
+        router: this.$router,
+      });
     },
   },
 };

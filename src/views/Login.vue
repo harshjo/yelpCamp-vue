@@ -44,7 +44,6 @@
 
 <script>
 import myNavbar from "../components/my-navbar";
-import firebase from "firebase";
 
 export default {
   name: "Login",
@@ -62,43 +61,14 @@ export default {
     login(event) {
       event.preventDefault();
       this.disableSubmit = true;
-      // firebase
-      //   .auth()
-      //   .signInWithEmailAndPassword(this.email, this.password)
-      //   .then((userCredential) => {
-      //     this.$store.commit("SET_USER", userCredential.user);
-      //     this.$store.commit("SET_USER_PRESENT");
-      //     this.$store.commit("TOGGLE_LOGGED_IN");
-      //     this.$router.push("/campgrounds");
-      //   })
-      //   .catch((err) => {
-      //     alert(err);
-      //   })
-      //   .finally(() => {
-      //     this.disableSubmit = false;
-      //   });
-      firebase
-        .auth()
-        .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then(() => {
-          firebase
-            .auth()
-            .signInWithEmailAndPassword(this.email, this.password)
-            .then((userCredential) => {
-              this.$store.commit("SET_USER", userCredential.user);
-              this.$store.commit("SET_USER_PRESENT");
-              this.$store.commit("TOGGLE_LOGGED_IN");
-              this.$router.push("/campgrounds");
-            })
-            .catch((err) => {
-              alert(err);
-            })
-            .finally(() => {
-              this.disableSubmit = false;
-            });
+      this.$store
+        .dispatch("login_user", {
+          email: this.email,
+          password: this.password,
+          router: this.$router,
         })
-        .catch((error) => {
-          console.log(error);
+        .finally(() => {
+          this.disableSubmit = false;
         });
     },
   },

@@ -2,14 +2,14 @@ import Vue from 'vue'
 import App from './App.vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import router from './router'
-import {firebaseConfig} from './firebase/firebaseConfig'
-import firebase from 'firebase'
-import 'firebase/firestore'
+// import {firebaseConfig} from './firebase/firebaseConfig'
+// import firebase from 'firebase'
+// import 'firebase/firestore'
 import store from './store'
 
 Vue.config.productionTip = false
-firebase.initializeApp(firebaseConfig)
-Vue.prototype.$db = firebase.firestore()
+// firebase.initializeApp(firebaseConfig)
+// Vue.prototype.$db = firebase.firestore()
 Vue.use(BootstrapVue, IconsPlugin)
 
 new Vue({

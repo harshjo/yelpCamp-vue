@@ -84,7 +84,7 @@
       </b-row>
 
       <!-- Comments Section -->
-      <myComments :key="reRender" @commentDeleted="reRender++"/>
+      <myComments :key="reRender" @commentDeleted="reRender++" />
     </b-container>
   </div>
 </template>
@@ -97,7 +97,6 @@ export default {
   data() {
     return {
       reRender: 0,
-      campground: {},
       fetched: false,
       comment_details: {
         campground_id: "",
@@ -105,24 +104,15 @@ export default {
         comment: "",
         author_name: "",
       },
-      comments: [],
     };
   },
   created() {
-    this.$db
-      .collection("campgrounds")
-      .doc(this.$route.params.id)
-      .get()
-      .then((snapshot) => {
-        if (!snapshot.exists) {
-          this.$router.push("/campgrounds");
-        }
+    this.$store
+      .dispatch("get_selected_campground", {
+        campground_id: this.$route.params.id,
+      })
+      .then(() => {
         this.fetched = true;
-        this.campground = snapshot.data();
-        // console.log(this.campground);
-        // if(typeof this.campground == undefined){
-        //   this.$router.push('/campgrounds')
-        // }
       })
       .catch((err) => {
         console.log(err);
@@ -135,20 +125,16 @@ export default {
   },
   methods: {
     deleteCampground() {
-      this.$db
-        .collection("campgrounds")
-        .doc(this.$route.params.id)
-        .delete()
-        .then(() => {
-          this.$store.commit("TOGGLE_CAMPGROUND_DELETED");
-          this.$router.push("/campgrounds");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      this.$store.dispatch("delete_campground", {
+        campground_id: this.$route.params.id,
+        router: this.$router,
+      });
     },
   },
   computed: {
+    campground() {
+      return this.$store.state.selected_campground;
+    },
     placeholder() {
       if (this.$store.state.user_present) {
         return "Enter your comment";

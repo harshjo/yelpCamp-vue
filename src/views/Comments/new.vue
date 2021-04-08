@@ -10,7 +10,7 @@
               <b-form-input
                 type="text"
                 placeholder="Enter your comment"
-                v-model="comment.data"
+                v-model.trim="comment.data"
                 required
               ></b-form-input>
             </div>
@@ -60,19 +60,11 @@ export default {
     onSubmit(event) {
       event.preventDefault();
       this.disableSubmit = true;
-      this.$db
-        .collection("comments")
-        .add(this.comment)
-        .then((docRef) => {
-          docRef.update({
-              comment_id: docRef.id
-          })
-          this.$store.commit('TOGGLE_COMMENT_ADDED')
-          this.$router.push(`/campgrounds/${this.$route.params.id}`)
-        })
-        .catch((error) => {
-          alert("Something went wrong");
-          console.log(error);
+      this.$store
+        .dispatch("add_new_comment", {
+          comment: this.comment,
+          router: this.$router,
+          campground_id: this.$route.params.id,
         })
         .finally(() => {
           this.disableSubmit = false;

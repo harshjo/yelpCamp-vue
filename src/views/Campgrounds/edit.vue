@@ -77,29 +77,20 @@ export default {
       disableSubmit: false,
     };
   },
-  created(){
-    if(typeof this.campground == "undefined"){
-      this.$router.push('/campgrounds')
+  created() {
+    if (typeof this.campground == "undefined") {
+      this.$router.push("/campgrounds");
     }
   },
   methods: {
     onSubmit(event) {
       event.preventDefault();
       this.disableSubmit = true;
-      this.$db
-        .collection("campgrounds")
-        .doc(this.$route.params.id)
-        .update(this.campground)
-        .then(() => {
-          this.$store.commit('TOGGLE_CAMPGROUND_EDITED');
-          this.$router.push(`/campgrounds/${this.$route.params.id}`)
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-          this.disableSubmit = false;
-        });
+      this.$store.dispatch("edit_campground", {
+        campground_id: this.$route.params.id,
+        campground: this.campground,
+        router: this.$router
+      });
     },
   },
 };
